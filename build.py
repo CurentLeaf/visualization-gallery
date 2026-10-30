@@ -14,6 +14,11 @@ for i in range(12):
 (p/'reports.json').write_text(json.dumps(rows,indent=2))
 with open('draws.csv','w',newline='') as f:
     w=csv.DictWriter(f,fieldnames=['report','value']);w.writeheader();w.writerows(draws)
-ax=msno.matrix(pd.DataFrame(rows)[['source','estimate','age_hours','location','reviewer']],figsize=(10,4),fontsize=10,sparkline=False)
+fields=pd.DataFrame(rows)[['source','estimate','age_hours','location','reviewer']]
+ax=msno.matrix(fields,figsize=(10,4),fontsize=10,sparkline=False)
 ax.figure.savefig(p/'missingness.png',bbox_inches='tight',dpi=140);plt.close(ax.figure)
+ax=msno.bar(fields,figsize=(10,4),fontsize=10)
+ax.figure.savefig(p/'missingness-bars.png',bbox_inches='tight',dpi=140);plt.close(ax.figure)
+ax=msno.heatmap(fields[['location','reviewer']],figsize=(7,4),fontsize=10)
+ax.figure.savefig(p/'missingness-heatmap.png',bbox_inches='tight',dpi=140);plt.close(ax.figure)
 assert len(rows)==12 and len(draws)==6000

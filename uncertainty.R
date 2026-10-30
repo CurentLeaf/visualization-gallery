@@ -1,0 +1,5 @@
+library(ggplot2)
+library(ggdist)
+d <- read.csv('draws.csv')
+p <- ggplot(d, aes(x=value,y=report)) + stat_halfeye(.width=c(.5,.95),fill='#60a5fa') + theme_minimal(base_size=12) + labs(x='Temperature (C)',y='Report',title='Synthetic temperature distributions')
+ggsave('site/uncertainty.png',p,width=10,height=6,dpi=140)
